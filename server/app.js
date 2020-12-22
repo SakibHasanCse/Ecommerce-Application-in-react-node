@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
+import expressvalidator from 'express-validator'
 import morgan from 'morgan'
 import {dbconnect} from './config/db'
 dotenv.config({path:'./config/config.env'})
@@ -13,9 +14,9 @@ const url = process.env.DBURL
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : true }))
 app.use(cookieParser())
+app.use(expressvalidator())
 app.use(cors())
 app.use(morgan('dev'))
-
 
 import userRouter from './router/user'
 app.use('/api' , userRouter)

@@ -10,7 +10,8 @@ const UserSchema = mongoose.Schema({
     },
     email:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     hashed_password:{
         type: String,
@@ -29,7 +30,7 @@ const UserSchema = mongoose.Schema({
         type:Array,
         default:[]
     }
-}, { timestamp: true })
+}, { timestamps: true })
 
 
 UserSchema.virtual('password')
@@ -43,9 +44,13 @@ UserSchema.virtual('password')
     });
 
 UserSchema.methods ={
+    authenticate:function(plainText){
+        return this.cryptoPassword(plainText) === this.hashed_password ;
+
+    },
     cryptoPassword:function(password){
         if(!password) return  '' ;
-        try {
+        try { 
             return crypto
                     .createHmac("sha1", this.salt)
                     .update(password)
