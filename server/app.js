@@ -18,8 +18,15 @@ app.use(expressvalidator())
 app.use(cors())
 app.use(morgan('dev'))
 
+import authRouter from './router/auth'
 import userRouter from './router/user'
-app.use('/api' , userRouter)
+import categoryRouter from './router/category'
+import productRouter from './router/product'
+
+app.use('/api', authRouter)
+app.use('/api', userRouter)
+app.use('/api', categoryRouter)
+app.use('/api', productRouter)
 app.listen(4000, () => {
     console.log('App listening on port 4000!');
     dbconnect(url)

@@ -1,10 +1,15 @@
 import express from 'express';
-import { userSignupValidator } from '../validator';
-import { createUser, loginUser, Signout } from './../controller/user';
+import { validateTokenJWT } from '../controller/auth';
+import { isAuth, userById } from '../controller/user';
+
+
+
 
 const router = express.Router()
 
-router.post('/signup', userSignupValidator, createUser)
-router.post('/signin', loginUser)
-router.get('/signout', Signout)
+router.get('/secret/:userId', validateTokenJWT, isAuth, (req, res) => {
+    res.json({ user: req.profile })
+})
+
+router.param('userId', userById)
 export default router
