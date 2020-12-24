@@ -1,5 +1,30 @@
 import User from '../model/auth';
 
+
+export const profile =(req , res , next)=>{
+    req.profile.hashed_password =undefined
+    req.profile.salt =undefined
+    return res.status(200).json(
+        req.profile
+    )
+}
+
+
+export const updateUser = (req, res, next) => {
+    User.findOneAndUpdate({_id: req.profile._id} ,{$set:req.body} ,{new:true} ,(err , user)=>{
+        if (err) {
+            return res.status(400).json({
+                error:'You are Not Authorized '
+            })
+            
+        }
+        user.hashed_password = undefined
+        user.salt = undefined
+        return res.status(201).json({
+            message: 'Profile Updated'
+        })
+    })
+}
 export const userById = async (req, res ,next ,id) => {
     try {
         await User.findById(id,(err,user)=>{
