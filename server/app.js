@@ -11,11 +11,11 @@ dotenv.config({path:'./config/config.env'})
 
 const url = process.env.DBURL
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended : true }))
 app.use(cookieParser())
 app.use(expressvalidator())
-app.use(cors())
 app.use(morgan('dev'))
 
 import authRouter from './router/auth'

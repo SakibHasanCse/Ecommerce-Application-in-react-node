@@ -46,6 +46,7 @@ export const loginUser =  async (req, res) =>{
 export const createUser = async (req, res) => {
     try {
         const body =req.body
+        console.log("body" ,body)
         const users = await User.findOne({ email: body.email});
         if (users) {
             return  res.status(404).json({
@@ -55,6 +56,7 @@ export const createUser = async (req, res) => {
         const newUser = new User(req.body)
         await newUser.save((err, user) => {
             if (err) {
+                console.log(err)
                 return res.status(400).json({
                     success: false,
                     err:errorHandler(err)
@@ -67,7 +69,8 @@ export const createUser = async (req, res) => {
             })
         })
     } catch (error) {
-        return res.status(400).json({
+        console.log(error)
+        return res.status(500).json({
             success: false, message: error.message
         })
     }
