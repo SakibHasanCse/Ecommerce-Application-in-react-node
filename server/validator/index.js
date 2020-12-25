@@ -11,8 +11,7 @@
      req.check('password', 'password is required')
          .isLength({ min: 6 ,max:100})
          .withMessage("Password must contain at last 6 characters")
-         .matches(/\d/)
-         .withMessage("password must contain a number")
+         
 
         const error = req.validationErrors();
         if(error){
