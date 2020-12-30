@@ -45,15 +45,16 @@ export const loginUser =  async (req, res) =>{
 }
 export const createUser = async (req, res) => {
     try {
-        const body =req.body
-        console.log("body" ,body)
-        const users = await User.findOne({ email: body.email});
+        const {email,name,password} =req.body
+  
+        const users = await User.findOne({ email:email});
         if (users) {
             return  res.status(404).json({
-                success:false, message:'User already exists with this email address'
+                success:false,
+                 error:'User already exists with this email address'
             })
         }
-        const newUser = new User(req.body)
+        const newUser = new User({email,name,password})
         await newUser.save((err, user) => {
             if (err) {
                 console.log(err)

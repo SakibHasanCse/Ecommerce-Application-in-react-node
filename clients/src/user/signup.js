@@ -21,7 +21,7 @@ const Signup = () => {
         setValues({ ...values, error: false, [name]: event.target.value })
 
     }
-    console.log(API)
+ 
     const { name, email, password, error, success } = values
 
 

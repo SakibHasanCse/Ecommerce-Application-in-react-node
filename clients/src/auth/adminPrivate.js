@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { isAuthnticated } from './index';
 
-function PrivateRoute({ component: Component, ...rest }) {
+function adminRouter({ component: Component, ...rest }) {
     return (
 
         <Route
             {...rest}
             render={props =>
-                isAuthnticated() ? (
+                isAuthnticated() && isAuthnticated().user.role === 'admin' ? (
                     <Component />
                 ) : (<Redirect
                     to={{
@@ -22,4 +22,4 @@ function PrivateRoute({ component: Component, ...rest }) {
 
 
 }
-export default PrivateRoute
+export default adminRouter

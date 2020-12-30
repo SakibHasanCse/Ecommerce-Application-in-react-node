@@ -3,13 +3,23 @@ import Category from '../model/category'
 export const createCategory = async(req , res , next)=>{
 
   try {
+      const cat = await Category.findOne(req.body)
+      if(cat){
+         return res.status(401).json({
+                  error: 'Category Already exists'
+              }) 
+      }
       const category = new Category(req.body)
+
       await category.save((err, cat) => {
           if (err) {
+              console.log(err)
               return res.status(400).json({
                   error: errorHandler(err)
               })
           }
+              console.log(cat)
+
           return res.status(201).json({
               success: true,
               data: cat
@@ -17,7 +27,7 @@ export const createCategory = async(req , res , next)=>{
       })
   } catch (error) {
       return res.status(500).json({
-          error: error
+          error: 'Internal Server Error'
       })
   }
 }

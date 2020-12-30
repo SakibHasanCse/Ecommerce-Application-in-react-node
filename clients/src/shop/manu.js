@@ -1,4 +1,4 @@
-import React, { Fragment} from 'react';
+import React, { Fragment } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { logoutauthorized } from '../auth/index';
 import { isAuthnticated } from './../auth/index';
@@ -20,14 +20,26 @@ const Menu = ({ history }) => (
                 <Link className="nav-link" style={isActive(history, "/")} to="/">Home</Link>
 
             </li>
-            <li className="nav-item">
-                <Link className="nav-link" style={isActive(history, "/dashbord")} to="/dashbord">Dashboard</Link>
 
-            </li>
 
-            {!isAuthnticated() &&(
+            {isAuthnticated() && isAuthnticated().user.role === 'user' && (
+
+                <li className="nav-item">
+                    <Link className="nav-link" style={isActive(history, "/dashbord")} to="/dashbord">Dashboard</Link>
+                </li>
+            )}
+            {isAuthnticated() && isAuthnticated().user.role === 'admin' && (
+
+
+                <li className="nav-item">
+                    <Link className="nav-link" style={isActive(history, "/admin/dashbord")} to="/admin/dashbord">Dashboard</Link>
+                </li>
+            
+                
+            )}
+
+            {!isAuthnticated() && (
                 <Fragment>
-
                     <li className="nav-item">
                         <Link className="nav-link" style={isActive(history, "/signup")} to="/signup">Signup</Link>
 
@@ -37,13 +49,10 @@ const Menu = ({ history }) => (
 
                     </li>
                 </Fragment>
-            ) }
+            )}
 
-    {isAuthnticated() && (
-
-
-
-        <div>
+            {isAuthnticated() && (
+                <div>
 
                     <li className="nav-item">
                         <span className="nav-link" onClick={() => logoutauthorized(() => {
@@ -51,10 +60,10 @@ const Menu = ({ history }) => (
                         })} style={{ cursor: 'pointer', color: '#ffff' }} logoutauthoriz >Signout</span>
 
                     </li>
-        </div>
-    )}
+                </div>
+            )}
 
-           
+
 
         </ul>
     </div>
