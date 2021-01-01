@@ -34,14 +34,14 @@ export const createProduct = async (req, res) => {
             product.photo.contentType = files.photo.type
         }
         product.save((err, result) => {
-            if (err || !result) {
+            if (err) {
                 console.log(err)
                 return res.status(400).json({
                     error: errorHandler(err)
 
                 })
             }
-            return res.status(201).json({ result })
+            return res.status(201).json(result )
         })
 
     })

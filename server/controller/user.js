@@ -29,6 +29,7 @@ export const userById = async (req, res ,next ,id) => {
     try {
         await User.findById(id,(err,user)=>{
             if(err || !user){
+                console.log(err)
                 return res.status(404).json({
                     error: 'User not found'
                 })

@@ -19,11 +19,11 @@ export const CategoryAPi = (id, token, category) => {
 }
 
 export const ProdductAPi = (id, token, product) => {
+    console.log(id, token, product)
 
     return fetch(`${API}/product/create/${id}`, {
         method: 'POST', headers: {
             Accept: 'application/json',
-
             Authorization: `Bearer ${token}`,
         },
         body: product
@@ -36,3 +36,22 @@ export const ProdductAPi = (id, token, product) => {
     })
 
 }
+
+
+
+
+export const AllCategoryAPi = () => {
+
+
+    return fetch(`${API}/category/list`, {
+        method: 'GET'
+    }).then(response => {
+        return response.json();
+    }).catch(err => {
+        console.log(err)
+        return err
+
+    })
+
+}
+

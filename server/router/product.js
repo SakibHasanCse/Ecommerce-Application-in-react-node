@@ -1,7 +1,7 @@
 import express from 'express';
 import { validateTokenJWT } from '../controller/auth';
 import { isAdmin, isAuth, userById } from '../controller/user';
-import { getProduct, createProduct, deleteProduct, photo, productById, listCategory, relatedProduct, singleProduct, listBySearch, updateProduct } from './../controller/product';
+import { createProduct, deleteProduct, getProduct, listBySearch, listCategory, photo, productById, relatedProduct, updateProduct } from './../controller/product';
 
 
 
