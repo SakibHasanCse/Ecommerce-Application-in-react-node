@@ -37,6 +37,9 @@ const CreateProduct = () => {
         formData } = values
 
     const { user, token } = isAuthnticated()
+
+
+
  const init = () => {
         AllCategoryAPi()
             .then(result => {
@@ -51,6 +54,10 @@ const CreateProduct = () => {
 
             })
     }
+
+
+
+    
     useEffect(() => {
         init()
     }, [])

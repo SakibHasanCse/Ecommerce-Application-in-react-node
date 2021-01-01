@@ -8,11 +8,11 @@ const Home = () => {
     const [productByArival, setProductByArival] = useState([])
     const [error, setError] = useState(false)
 
-    const loadProductsBySell = () =>{
-        GetProducts('sold').then(result=>{
-            if(result.error){
+    const loadProductsBySell = () => {
+        GetProducts('sold').then(result => {
+            if (result.error) {
                 setError(result.error)
-            }else{
+            } else {
                 setProductBySell(result)
             }
         }).catch(err => {
@@ -20,11 +20,11 @@ const Home = () => {
         })
     }
 
-     const loadProductsByArrival = () =>{
-        GetProducts('createdAt').then(result=>{
-            if(result.error){
+    const loadProductsByArrival = () => {
+        GetProducts('createdAt').then(result => {
+            if (result.error) {
                 setError(result.error)
-            }else{
+            } else {
                 setProductByArival(result)
             }
         }).catch(err => {
@@ -32,16 +32,16 @@ const Home = () => {
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         loadProductsBySell()
         loadProductsByArrival()
-    },[])
+    }, [])
     return (
         <Layout title="Home Page" description="This is the home page" className="container py-5">
- <h2 class="font-weight-bold mb-2">New Arrival</h2>
+            <h2 class="font-weight-bold mb-2">New Arrival</h2>
             <div className="row pb-5 mb-4">
-                {productByArival.map((product ,i)=>(
-                    < ProductCard  key={i} product={product}/>
+                {productByArival.map((product, i) => (
+                    < ProductCard key={i} product={product} />
                 )
                 )}
             </div>
@@ -49,13 +49,13 @@ const Home = () => {
 
             <h2 class="font-weight-bold mb-2">Best Sellers</h2>
             <div className="row pb-5 mb-4">
-                {productBySell.map((product ,i)=>(
-                    < ProductCard  key={i} product={product}/>
+                {productBySell.map((product, i) => (
+                    < ProductCard key={i} product={product} />
                 )
                 )}
             </div>
-           
-       </Layout>
+
+        </Layout>
     );
 }
 
