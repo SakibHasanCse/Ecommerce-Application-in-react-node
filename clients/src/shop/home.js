@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ProductCard } from './card';
 import Layout from "./layout";
+import Search from "./Search";
 import { GetProducts } from './shopApi';
 
 const Home = () => {
@@ -38,6 +39,8 @@ const Home = () => {
     }, [])
     return (
         <Layout title="Home Page" description="This is the home page" className="container py-5">
+
+            <Search />
             <h2 class="font-weight-bold mb-2">New Arrival</h2>
             <div className="row pb-5 mb-4">
                 {productByArival.map((product, i) => (

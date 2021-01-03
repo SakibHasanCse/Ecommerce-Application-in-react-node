@@ -220,18 +220,18 @@ export const listBySearch =async (req, res) => {
                         $gte:req.body.filters[key][0],
                         $lte:req.body.filters[key][1]
                     }
-                }
-                
-            }else{
+                }else{
                 findArray[key] = req.body.filters[key]
             }
+                
+            }
         }
-        console.log(findArray ,limit , skip )
+        
 
   await  Product.find(findArray)
-        .select("-photo")
-        .populate("category")
-        .sort([[sortBy , order]])
+          .select('-photo')
+        .populate('category')
+        .sort([[sortBy, order]])
         .skip(skip)
         .limit(limit)
         .exec((err,data)=>{
@@ -242,8 +242,7 @@ export const listBySearch =async (req, res) => {
                     error: 'Product not found'
                 })
             }
-            return res.json({ 
-                
+             res.json({ 
                 size:data.length,
                 data
             }
@@ -251,6 +250,41 @@ export const listBySearch =async (req, res) => {
         })
 }
 
+
+
+
+export const listBySearchinHome =async (req , res , next)=>{
+    let query ={}
+    if(req.query.search){
+        query.name={$regex:req.query.search , $options:'i'}
+        if(req.query.category && req.query.category != 'All'){
+            query.category = req.query.category
+        }
+         await  Product.find(query)
+          .select('-photo')
+        .populate('category')
+        .exec((err,data)=>{
+        
+            if (err) {
+                console.log(err)
+                return res.status(400).json({
+                    error: 'Product not found'
+                })
+            }
+             res.json(
+              
+                data
+            
+            )
+        })
+
+    }else{
+
+        return res.status(400).json({
+                    error: 'Product not found'
+                })
+    }
+}
 export const photo =(req , res , next)=>{
     if(req.product.photo.data){
     res.set('Content-Type', req.product.photo.contentType)

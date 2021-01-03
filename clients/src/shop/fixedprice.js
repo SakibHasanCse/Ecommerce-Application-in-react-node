@@ -2,17 +2,17 @@ export const Prices = [
     {
         _id: 0,
         name:'Any',
-        array:[]
+        array: []
     },
     {
         _id: 1,
         name:'$0 to $19',
-        array:[0 , 19]
+        array: [0 , 19]
     },
        {
         _id: 2,
         name:'$20 to $49',
-        array:[20 , 49]
+        array: [20 , 49]
     },   {
         _id: 3,
         name:'$50 to $100',

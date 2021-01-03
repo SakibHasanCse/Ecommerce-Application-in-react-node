@@ -41,8 +41,6 @@ export const ProdductAPi = (id, token, product) => {
 
 
 export const AllCategoryAPi = () => {
-
-
     return fetch(`${API}/category/list`, {
         method: 'GET'
     }).then(response => {

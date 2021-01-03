@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { AllCategoryAPi } from './../admin/adminApi';
+import { ProductCard } from './card';
 import Checkbox from './categoryCheckBox';
+import { Prices } from './fixedprice';
 import Layout from './layout';
 import RadioBox from './RadioBox';
-import { Prices } from './fixedprice';
 import { getProductsByFilter } from './shopApi';
-import { Link } from 'react-router-dom';
-import { ProductCard } from './card';
 
 
 export const ShopProduct = () => {
@@ -15,6 +14,7 @@ export const ShopProduct = () => {
     const [error, setError] = useState(false);
     const [limit, setLimit] = useState(6)
     const [skip, setSkip] = useState(0)
+    const [size, setSize] = useState(0)
     const [filterResult, setFilterResult] = useState(0)
 
     const init = () => {
@@ -44,17 +44,45 @@ export const ShopProduct = () => {
 
                 } else {
                     setFilterResult(result.data)
-
+                    setSize(result.size)
+                    setSkip(0)
                 }
-            }).catch(err => {
-                setError(err)
+            })
 
+    }
+
+ const loadMore = (newfilter) => {
+     let toSkip = skip + limit
+
+        getProductsByFilter(skip, limit, myFiltes.filters)
+            .then(result => {
+                
+                if (result.error) {
+                    setError(result.error)
+
+                } else {
+                    setFilterResult([...filterResult , ...result.data])
+                    setSize(result.size)
+                    setSkip(toSkip)
+                }
             })
 
     }
 
 
+const loadMoreButton =()=>{
+    return(
+        size && size >= limit &&(
+            <button onClick={loadMore} className="btn btn-warning ">Load More</button>
+        )
+    )
+}
 
+
+    useEffect(() => {
+        init();
+        loadProductByFilter(skip, limit, myFiltes.filters);
+    }, [])
 
 
 
@@ -72,8 +100,6 @@ export const ShopProduct = () => {
     }
 
 
-
-
     const handlePrice = (value) => {
         const data = Prices
         let array = []
@@ -89,10 +115,6 @@ export const ShopProduct = () => {
 
     }
 
-    useEffect(() => {
-        init()
-        loadProductByFilter(skip, limit, myFiltes.filters)
-    }, [])
 
 
 
@@ -117,14 +139,23 @@ export const ShopProduct = () => {
                     <h5 class="font-weight-bold mb-2">Products</h5>
 
                     <div className="row pb-5 mb-4">
+                     
                         {filterResult.map((product, i) => (
 
-
+                                   
                             <ProductCard key={i} product={product} />
 
                         )
                         )}
-                    </div>
+
+                        <hr/>
+                      
+                    </div> 
+                        <div className="text-center mb-5">
+                            
+                           {loadMoreButton()}
+                        </div>
+              
 
 
                 </div>
