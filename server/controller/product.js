@@ -145,14 +145,14 @@ export const updateProduct = async (req, res) => {
 }
 
 export const getProduct = async (req, res) => {
-    const orderBy = req.query.order ? req.query.order : 'asc'
-    const sortBy = req.query.sortBy ? req.query.sortBy : '_id'
-    const limit = req.query.limit ? parseInt(req.query.limit) : 6
+    let order = req.query.order ? req.query.order : 'asc'
+    let sortBy = req.query.sortBy ? req.query.sortBy : '_id'
+    let limit = req.query.limit ? parseInt(req.query.limit) : 6
 
     await Product.find()
         .select("-photo")
         .populate('category')
-        .sort([[sortBy, orderBy]])
+        .sort([[sortBy, order]])
         .limit(limit)
         .exec((err, product) => {
             if (err) {
@@ -206,32 +206,36 @@ export const listCategory = async (req, res) => {
 }
 
 export const listBySearch =async (req, res) => {
-    const orderBy = req.query.orderBy ? req.query.orderBy : 'desc';
-    const sortBy = req.query.sortBy ? req.query.sortBy : '_id';
-    const limit = req.query.limit ? parseInt(req.query.limit) : 100;
-    const skip = parseInt(req.query.skip)
-    const  findArray = {}
-        for(let key in req.body.filter) {
-            if(req.body.filter[key].length > 0){
+    let order= req.body.order ? req.body.order : 'desc';
+    let sortBy = req.body.sortBy ? req.body.sortBy : '_id';
+    let limit = req.body.limit ? parseInt(req.body.limit) : 100;
+    let skip = parseInt(req.body.skip)
+
+    let  findArray = {}
+    
+    for(let key in req.body.filters) {
+            if(req.body.filters[key].length > 0){
                 if(key === "price"){
                     findArray[key] = {
                         $gte:req.body.filters[key][0],
                         $lte:req.body.filters[key][1]
                     }
                 }
-
+                
             }else{
-                findArray[key] =req.body.filter[key]
+                findArray[key] = req.body.filters[key]
             }
         }
+        console.log(findArray ,limit , skip )
 
-    Product.find(findArray)
+  await  Product.find(findArray)
         .select("-photo")
         .populate("category")
-        .sort([[sortBy ,orderBy]])
+        .sort([[sortBy , order]])
         .skip(skip)
         .limit(limit)
         .exec((err,data)=>{
+            console.log(data)
             if (err) {
                 console.log(err)
                 return res.status(400).json({
