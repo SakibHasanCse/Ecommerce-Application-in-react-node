@@ -56,3 +56,18 @@ export const listBySearch = params => {
     })
 
 }
+
+export const getProduct = slug => {
+  
+ 
+    return fetch(`${API}/product/${slug}`, {
+        method: 'GET'
+    }).then(response => {
+        return response.json();
+    }).catch(err => {
+        console.log(err)
+        return err
+
+    })
+
+}

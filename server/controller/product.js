@@ -250,7 +250,24 @@ export const listBySearch =async (req, res) => {
         })
 }
 
-
+export const getsingleProduct = async(req, res) => {
+   await Product.findOne({slug:req.params.productslug})
+        .select('-photo')
+        .populate('category')
+        .exec((err , product)=>{
+         if (err || !product) {
+                console.log(err)
+                return res.status(400).json({
+                    error: 'Product not found'
+                })
+            }
+             res.json(
+              
+                product
+            
+            )
+   })
+}
 
 
 export const listBySearchinHome =async (req , res , next)=>{

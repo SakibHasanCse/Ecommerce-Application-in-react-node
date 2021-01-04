@@ -14,7 +14,7 @@ export const ProductCard = ({ product }) => {
                         {/* <p className="small text-muted">CEO - Consultant</p> */}
                         <p className="small text-muted">{product.price}</p>
                         
-                        <Link to="/view-product">
+                        <Link to={`/product/${product.slug}`}>
                             <button className="btn btn-outline-primary pt-2 mr-2 mb-2">
                                 View
                                     </button>

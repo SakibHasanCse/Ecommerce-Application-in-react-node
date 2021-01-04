@@ -11,6 +11,7 @@ import Signup from './user/signup';
 import Singin from './user/singin';
 import userDashbord from './user/userDashbord';
 import { ShopProduct } from './shop/shop';
+import Product from './shop/singleProduct';
 
 
 
@@ -21,6 +22,8 @@ const Routes = () => {
             <Switch>
                 <Route path="/" exact component={Home} />
                 <Route path="/shop" exact component={ShopProduct} />
+                <Route path="/product/:productslug" exact component={Product} />
+    
                 <Route path="/signup" exact component={Signup} />
                 <Route path="/signin" exact component={Singin} />
                 <PrivateRoute path="/dashbord" exact component={userDashbord} />
