@@ -1,0 +1,15 @@
+body {
+    min-height: 100vh;
+    background: #fafafa;
+}
+.progress {
+    height: 10px;
+}
+
+.btn, .jumbotron , .nav:hover{
+    border-radius: 0px;
+}
+
+.product-image {
+    height: 100%;
+}
